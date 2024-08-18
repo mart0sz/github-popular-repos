@@ -21,15 +21,16 @@ public class GithubService {
     }
 
     public List<GithubRepository> getPopularRepositories(String date, String language, int limit) {
-        String url = githubApiUrl + "/search/repositories?q=created:>" + date;
+        String url = this.githubApiUrl + "/search/repositories?q=created:>" + date;
 
         if (language != null && !language.isEmpty()) {
             url += "+language:" + language;
         }
 
         url += "&sort=stars&order=desc&per_page=" + limit;
-
+        System.out.println("Request URL: " + url);
         GithubResponse response = restTemplate.getForObject(url, GithubResponse.class);
+
         return response != null ? response.getItems() : List.of();
     }
 }
