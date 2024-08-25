@@ -1,11 +1,12 @@
 package com.example.github_popular_repos.controller;
 
 import com.example.github_popular_repos.model.GithubRepository;
-import com.example.github_popular_repos.service.FavouriteRepositoryService;
-import com.example.github_popular_repos.service.GithubService;
+import com.example.github_popular_repos.service.IGithubService;
+import com.example.github_popular_repos.service.IFavouriteRepositoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,11 +16,11 @@ import java.util.Set;
 @Tag(name = "Repository API", description = "API do zarządzania popularnymi repozytoriami")
 public class RepositoryController {
 
-    private final GithubService githubService;
-    private final FavouriteRepositoryService favouriteRepositoryService;
+    private final IGithubService githubService;
+    private final IFavouriteRepositoryService favouriteRepositoryService;
 
-
-    public RepositoryController(GithubService githubService, FavouriteRepositoryService favouriteRepositoryService) {
+    @Autowired
+    public RepositoryController(IGithubService githubService, IFavouriteRepositoryService favouriteRepositoryService) {
         this.githubService = githubService;
         this.favouriteRepositoryService = favouriteRepositoryService;
     }
@@ -35,6 +36,7 @@ public class RepositoryController {
             @RequestParam(defaultValue = "10") int limit) {
         return githubService.getPopularRepositories(date, language, limit);
     }
+
     @PostMapping("/api/repositories/favourites")
     @Operation(summary = "Dodaj repozytorium do ulubionych", description = "Dodaje repozytorium do listy ulubionych")
     public void addToFavourites(@RequestBody GithubRepository repository) {

@@ -1,28 +1,28 @@
-package com.example.github_popular_repos.service;
+package com.example.github_popular_repos.service.impl;
 
 import com.example.github_popular_repos.model.GithubRepository;
+import com.example.github_popular_repos.service.IFavouriteRepositoryService;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Service
-public class FavouriteRepositoryService {
+public class FavouriteRepositoryServiceImpl implements IFavouriteRepositoryService {
 
-    // Używamy HashSet do przechowywania ulubionych repozytoriów
     private final Set<GithubRepository> favourites = new HashSet<>();
 
-    // Dodawanie repozytoriów do ulubionych
+    @Override
     public void addToFavourites(GithubRepository repository) {
         favourites.add(repository);
     }
 
-    // Usuwanie repozytoriów z ulubionych
+    @Override
     public void removeFromFavourites(GithubRepository repository) {
         favourites.remove(repository);
     }
 
-    // Pobieranie wszystkich ulubionych repozytoriów
+    @Override
     public Set<GithubRepository> getAllFavourites() {
         return new HashSet<>(favourites);
     }
